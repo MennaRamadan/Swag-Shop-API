@@ -7,6 +7,14 @@ var db = mongoose.connect('mongodb://localhost/swag-shop', { useNewUrlParser: tr
 var Product = require('./models/product');
 var WishList = require('./models/wishList');
 
+//Allow all requests from all domains & localhost
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Methods", "POST, GET");
+    next();
+  });
+
 //Middleware
 app.use(bodyParser.json());
 //this line of code mean refuse any thing that is not formatted
@@ -22,7 +30,7 @@ app.post('/product', function(request, response){
     product.save(function (err, savedProduct){
         if(err)
         {
-            response.status(500).send({error: "Coul not save product"});
+            response.status(500).send({error: "Could not save product"});
         }
         else{
             response.status(200).send(savedProduct);
@@ -102,8 +110,8 @@ app.put('/wishList/product/add', function(request, response){
 
 
 
-app.listen(3000, function(){
-    console.log("Swag shop API running on port 3000!");
+app.listen(3004, function(){
+    console.log("Swag shop API running on port 3004!");
 });    
 
 
